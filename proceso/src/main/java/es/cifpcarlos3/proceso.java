@@ -7,14 +7,11 @@ import java.nio.channels.FileLock;
 
 public class proceso {
     public static void main(String[] args) {
-        File f = null;
+        File archivo = null;
         RandomAccessFile raf = null;
-        int cantidadNumeros;
+        int cantidad;
 
-        if(args.length != 3) {
-            System.err.println("[*ERROR*] Uso correcto: java -jar xxxx.jar <nombre_proceso> <cantidad_numeros> <fichero>");
-            System.exit(-1);
-        }
+        
 
         try {
             Integer.parseInt(args[1]);
@@ -24,21 +21,21 @@ public class proceso {
         }
 
         String proceso = args[0];
-        cantidadNumeros = Integer.parseInt(args[1]);
-        f = new File(args[2]);
+        cantidad = Integer.parseInt(args[1]);
+        archivo = new File(args[2]);
 
-        if(!f.exists()){
+        if(!archivo.exists()){
             try {
-                f.createNewFile();
+                archivo.createNewFile();
             } catch (Exception e) {
                 System.err.println(e);
             }
         }
 
         try {
-            raf = new RandomAccessFile(f, "rw");
+            raf = new RandomAccessFile(archivo, "rw");
             int numero = 2;
-            for(int i = 0; i < cantidadNumeros; i++){
+            for(int i = 0; i < cantidad; i++){
                 try{
                     FileLock bloqueo = raf.getChannel().lock();
                     raf.seek(raf.length());
